@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    eureka:
+      client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+          defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8761}
+    gateway:
+      routes:
+        - id: PROFILE-SERVICE
+          uri: lb://PROFILE-SERVICE:9001
+          predicates:
+            - Path=/user-service/**
+            - Path=/auth/**
+          filters:
+            - SetPath=/
+
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/product-service/**
+          filters:
+            - SetPath=/
+
+server:
+  port: 8999

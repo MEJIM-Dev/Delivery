@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: profile-service
+  cloud:
+    eureka:
+      client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+          defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8761}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/delivery_profile_service}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    driver-class-name=com: com.postgresql.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    ROOT: OFF
+    org.springframework.security: DEBUG
+    com.netflix.discovery: DEBUG
+
+server:
+  port: 9001
+
+
+app:
+  login:
+    pattern: 0
+  requiresActivation: true
+  jwt:
+    secret: ${JWT_SECRET:8c804c36256e93d041eaa691cfa46e94fa69637edab292f0878f770715619d89687bf5b982e77da2d73246b76ff36bbdb8b26933d5a5993ca144d8532f851a97}
